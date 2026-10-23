@@ -1,0 +1,53 @@
+---
+import Base from "../layouts/Base.astro";
+import Todo from "../components/Todo.astro";
+import { site } from "../data/site";
+---
+
+<Base title="Politique de confidentialité" description="Politique de confidentialité du site.">
+  <article class="container-page section max-w-3xl space-y-8">
+    <h1 class="text-3xl font-bold">Politique de confidentialité</h1>
+
+    <section>
+      <h2 class="text-xl font-semibold">Responsable du traitement</h2>
+      <p class="mt-3">
+        <Todo value={site.ownerName} />, joignable à l'adresse {site.email ? <a href={`mailto:${site.email}`} class="text-brand underline">{site.email}</a> : <Todo />}.
+      </p>
+    </section>
+
+    <section>
+      <h2 class="text-xl font-semibold">Données collectées</h2>
+      <p class="mt-3">
+        Ce site ne dépose aucun cookie publicitaire et n'utilise aucun outil de suivi. Les seules données collectées sont celles que vous envoyez vous-même : par email, par téléphone ou en réservant un appel (nom, email, téléphone, nom de l'entreprise, message).
+      </p>
+    </section>
+
+    <section>
+      <h2 class="text-xl font-semibold">Utilisation</h2>
+      <p class="mt-3">
+        Ces données servent uniquement à vous répondre et à préparer notre échange. Elles ne sont ni vendues ni transmises à des tiers, sauf aux services techniques nécessaires (messagerie, outil de prise de rendez-vous <Todo value="[nom de l'outil à compléter]" />).
+      </p>
+    </section>
+
+    <section>
+      <h2 class="text-xl font-semibold">Durée de conservation</h2>
+      <p class="mt-3">
+        Les données d'un contact sans suite sont conservées 3 ans au plus après le dernier échange.
+      </p>
+    </section>
+
+    <section>
+      <h2 class="text-xl font-semibold">Vos droits</h2>
+      <p class="mt-3">
+        Vous pouvez demander l'accès, la correction ou la suppression de vos données en écrivant à l'adresse ci-dessus. Vous pouvez aussi déposer une réclamation auprès de la CNIL (<a href="https://www.cnil.fr" class="text-brand underline">cnil.fr</a>).
+      </p>
+    </section>
+
+    <section>
+      <h2 class="text-xl font-semibold">Hébergement</h2>
+      <p class="mt-3">
+        Le site est hébergé par GitHub Pages (GitHub, Inc., États-Unis). GitHub peut enregistrer l'adresse IP des visiteurs pour la sécurité du service.
+      </p>
+    </section>
+  </article>
+</Base>

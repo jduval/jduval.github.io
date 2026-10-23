@@ -1,0 +1,23 @@
+---
+import { callHref, site } from "../data/site";
+
+interface Props {
+  class?: string;
+  label?: string;
+}
+
+const { class: className = "", label = site.callLabel } = Astro.props;
+const external = callHref.startsWith("http");
+---
+
+<a
+  href={callHref}
+  class:list={["btn-primary", className]}
+  {...(external ? { target: "_blank", rel: "noopener" } : {})}
+>
+  <svg aria-hidden="true" viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="4" width="18" height="18" rx="2"></rect>
+    <path d="M16 2v4M8 2v4M3 10h18"></path>
+  </svg>
+  {label}
+</a>
