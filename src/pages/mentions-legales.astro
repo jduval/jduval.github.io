@@ -1,0 +1,43 @@
+---
+import Base from "../layouts/Base.astro";
+import { site } from "../data/site";
+---
+
+<Base title="Mentions légales" description="Mentions légales du site.">
+  <article class="container-page section max-w-3xl space-y-8">
+    <h1 class="text-3xl font-bold">Mentions légales</h1>
+
+    <section>
+      <h2 class="text-xl font-semibold">Éditeur du site</h2>
+      <ul class="mt-3 space-y-1">
+        <li>Nom : {site.ownerName}</li>
+        <li>Ville : Marseille</li>
+        <li>Email : <a href={`mailto:${site.email}`} class="text-brand underline">{site.email}</a></li>
+        <li>Téléphone : <a href={`tel:${site.phone}`} class="text-brand underline">{site.phoneDisplay}</a></li>
+      </ul>
+      <p class="mt-3">Directeur de la publication : {site.ownerName}</p>
+    </section>
+
+    <section>
+      <h2 class="text-xl font-semibold">Hébergeur</h2>
+      <p class="mt-3">
+        GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis.<br />
+        Site : <a href="https://github.com" class="text-brand underline">github.com</a>
+      </p>
+    </section>
+
+    <section>
+      <h2 class="text-xl font-semibold">Propriété intellectuelle</h2>
+      <p class="mt-3">
+        Les textes et éléments graphiques de ce site sont la propriété de l'éditeur, sauf mention contraire. Toute reproduction sans autorisation est interdite.
+      </p>
+    </section>
+
+    <section>
+      <h2 class="text-xl font-semibold">Données personnelles</h2>
+      <p class="mt-3">
+        Voir la <a href="/confidentialite/" class="text-brand underline">politique de confidentialité</a>.
+      </p>
+    </section>
+  </article>
+</Base>

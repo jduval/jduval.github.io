@@ -1,0 +1,123 @@
+---
+import "../styles/global.css";
+import CallButton from "../components/CallButton.astro";
+import { nav, site } from "../data/site";
+
+interface Props {
+  title?: string;
+  description?: string;
+  showStickyCall?: boolean;
+}
+
+const { title, description = site.description, showStickyCall = true } = Astro.props;
+const pageTitle = title ? `${title} | ${site.title}` : site.title;
+const canonical = new URL(Astro.url.pathname, site.url).href;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  name: "Outils métier sur mesure",
+  description: site.description,
+  url: site.url,
+  areaServed: [
+    { "@type": "City", name: "Marseille" },
+    { "@type": "City", name: "Aix-en-Provence" },
+    { "@type": "City", name: "Aubagne" },
+    { "@type": "City", name: "La Ciotat" },
+    { "@type": "City", name: "Vitrolles" },
+    { "@type": "AdministrativeArea", name: "Bouches-du-Rhône" },
+  ],
+  address: { "@type": "PostalAddress", addressLocality: "Marseille", addressCountry: "FR" },
+  founder: { "@type": "Person", name: site.ownerName },
+  telephone: site.phone,
+  email: site.email,
+  image: `${site.url}/jerome.webp`,
+  sameAs: [site.linkedin],
+  priceRange: "€€",
+};
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="theme-color" content="#1f4e8c" />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body class="min-h-screen">
+    <a href="#contenu" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:rounded focus:bg-card focus:px-3 focus:py-2">
+      Aller au contenu
+    </a>
+
+    <header class="sticky top-0 z-40 border-b border-line bg-paper/90 backdrop-blur">
+      <div class="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-6 px-4 sm:px-6">
+        <a href="/" class="flex items-center gap-2 font-bold whitespace-nowrap">
+          <span>{site.firstName}</span>
+          <span class="hidden font-normal text-muted sm:inline">· Outils métier sur mesure</span>
+        </a>
+
+        <nav aria-label="Navigation principale" class="hidden xl:block">
+          <ul class="flex items-center gap-4 text-sm font-medium whitespace-nowrap text-muted">
+            {nav.map((item) => (
+              <li><a href={item.href} class="hover:text-brand">{item.label}</a></li>
+            ))}
+          </ul>
+        </nav>
+
+        <div class="hidden xl:block">
+          <CallButton class="px-4 py-2 text-sm whitespace-nowrap" label="Réserver un appel" />
+        </div>
+
+        <details class="group relative xl:hidden">
+          <summary class="flex cursor-pointer list-none items-center rounded-full border border-line px-3 py-2 text-sm font-medium [&::-webkit-details-marker]:hidden">
+            Menu
+          </summary>
+          <nav aria-label="Navigation mobile" class="absolute right-0 mt-2 w-56 rounded-2xl border border-line bg-card p-2 shadow-lg">
+            <ul>
+              {nav.map((item) => (
+                <li><a href={item.href} class="block rounded-lg px-3 py-2 hover:bg-brand-soft">{item.label}</a></li>
+              ))}
+            </ul>
+          </nav>
+        </details>
+      </div>
+    </header>
+
+    <main id="contenu">
+      <slot />
+    </main>
+
+    <footer class="border-t border-line bg-card pb-24 xl:pb-0">
+      <div class="container-page flex flex-col gap-6 py-10 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
+        <p>{site.ownerName}. Outils métier sur mesure pour les TPE et PME de Marseille et des Bouches-du-Rhône.</p>
+        <ul class="flex shrink-0 gap-5 whitespace-nowrap">
+          <li><a href={site.linkedin} target="_blank" rel="noopener" class="hover:text-brand">LinkedIn</a></li>
+          <li><a href="/mentions-legales/" class="hover:text-brand">Mentions légales</a></li>
+          <li><a href="/confidentialite/" class="hover:text-brand">Confidentialité</a></li>
+        </ul>
+      </div>
+    </footer>
+
+    {showStickyCall && (
+      <div class="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-paper/95 p-3 backdrop-blur xl:hidden">
+        <CallButton class="w-full" />
+      </div>
+    )}
+
+    <script>
+      document.querySelectorAll("details nav a").forEach((link) => {
+        link.addEventListener("click", () => link.closest("details")?.removeAttribute("open"));
+      });
+    </script>
+  </body>
+</html>
