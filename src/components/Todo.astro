@@ -1,9 +1,0 @@
----
-interface Props {
-  value?: string;
-}
-
-const { value } = Astro.props;
----
-
-{value && !value.startsWith("[") ? value : <span class="todo">{value || "[à compléter]"}</span>}

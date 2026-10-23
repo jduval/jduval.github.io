@@ -1,7 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
 import CallButton from "../components/CallButton.astro";
-import Todo from "../components/Todo.astro";
 import { site } from "../data/site";
 import {
   afterDelivery,
@@ -17,7 +16,7 @@ import {
 
 <Base>
   <section class="container-page pt-12 pb-16 sm:pt-20 sm:pb-24">
-    <p class="eyebrow">Développeur freelance à Marseille</p>
+    <p class="eyebrow">Planning, commandes, contrats, interventions</p>
     <h1 class="mt-3 max-w-3xl text-3xl leading-tight font-bold tracking-tight sm:text-5xl">
       Des outils sur mesure pour les TPE et PME de Marseille et de sa région, livrés en quelques semaines, et qui vous appartiennent.
     </h1>
@@ -138,7 +137,7 @@ import {
         ))}
       </div>
       <p class="mt-6 text-sm text-muted">
-        Prix hors taxes. <Todo value="[à compléter : mention de TVA selon le statut juridique]" />
+        Prix hors taxes.
       </p>
     </div>
   </section>
@@ -183,19 +182,26 @@ import {
 
   <section id="a-propos" class="section" aria-labelledby="apropos-titre">
     <div class="container-page grid items-start gap-10 md:grid-cols-[200px_1fr]">
-      <div class="flex aspect-square w-40 items-center justify-center rounded-2xl border border-dashed border-line bg-card text-center text-sm text-muted md:w-full">
-        <Todo value="[photo à compléter]" />
-      </div>
+      <img
+        src="/jerome.webp"
+        alt={`Photo de ${site.firstName}`}
+        width="640"
+        height="640"
+        loading="lazy"
+        class="aspect-square w-40 rounded-2xl object-cover md:w-full"
+      />
       <div>
         <p class="eyebrow">À propos</p>
-        <h2 id="apropos-titre" class="h2"><Todo value={site.ownerName} />, ingénieur logiciel à Marseille</h2>
+        <h2 id="apropos-titre" class="h2">{site.firstName}, ingénieur logiciel à Marseille</h2>
         <p class="lead">
           15 ans d'expérience dans le marketing mobile, le transport routier et le recrutement.
         </p>
         <p class="mt-4 max-w-2xl">
           Je travaille par itérations : je livre dès qu'une version est utilisable, puis je l'améliore avec vos retours. De ces années, je garde deux choses : comprendre vite un nouveau métier, et faire des outils simples à utiliser sur le terrain, depuis un téléphone.
         </p>
-        <p class="mt-4 max-w-2xl text-muted"><Todo value="[parcours détaillé à compléter]" /></p>
+        <p class="mt-4">
+          <a href={site.linkedin} target="_blank" rel="noopener" class="font-semibold text-brand underline">Voir mon parcours sur LinkedIn</a>
+        </p>
       </div>
     </div>
   </section>
@@ -226,19 +232,26 @@ import {
           15 minutes pour comprendre votre problème et voir si je peux aider. Gratuit et sans engagement.
         </p>
         <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-          <CallButton class="bg-white !text-brand hover:bg-brand-soft" />
+          {site.bookingUrl ? (
+            <CallButton class="bg-white !text-brand hover:bg-brand-soft" />
+          ) : (
+            <>
+              <a href={`tel:${site.phone}`} class="btn-primary bg-white !text-brand hover:bg-brand-soft">Appeler le {site.phoneDisplay}</a>
+              <a href={`mailto:${site.email}?subject=${encodeURIComponent("Demande d'appel de 15 minutes")}`} class="btn-secondary border-white/40 bg-transparent !text-white hover:border-white">Écrire un email</a>
+            </>
+          )}
         </div>
         <dl class="mt-10 grid gap-6 sm:grid-cols-3">
           <div>
             <dt class="text-sm text-white/70">Téléphone</dt>
             <dd class="mt-1 font-semibold">
-              {site.phone ? <a href={`tel:${site.phone}`} class="underline">{site.phoneDisplay}</a> : <Todo value={site.phoneDisplay} />}
+              <a href={`tel:${site.phone}`} class="underline">{site.phoneDisplay}</a>
             </dd>
           </div>
           <div>
             <dt class="text-sm text-white/70">Email</dt>
             <dd class="mt-1 font-semibold">
-              {site.email ? <a href={`mailto:${site.email}`} class="underline">{site.email}</a> : <Todo />}
+              <a href={`mailto:${site.email}`} class="underline">{site.email}</a>
             </dd>
           </div>
           <div>

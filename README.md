@@ -19,8 +19,6 @@ Le site est sur http://localhost:4321.
 - `src/data/content.ts` : métiers, étapes, offres, engagements, questions fréquentes.
 - `src/pages/` : la page d'accueil et les pages légales.
 
-Les informations manquantes s'affichent en jaune avec `[à compléter]`.
-
 ## Mise en ligne
 
 Chaque push sur `master` lance `.github/workflows/deploy.yml`, qui construit le site et le publie sur https://jduval.github.io.
